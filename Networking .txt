@@ -1,0 +1,27 @@
+Networking 
+
+##IP Address
+used to generate/provide unique address to a device which is connected to the network
+track / monitor activities , block activities
+how does it look like => representation done through IPV4 and generated through IPV4
+Why IPV4 ?? = to maintain a proper standard in a particular format 
+Command => irconfig/ipconfig
+172.16.3.4 => each number can vary from 0 to 255 , so unique ip address 255^4
+why 255 only ? => each of the number is a byte (8 bites) , so ip address is 4 bytes or 32 bits separated by (.)  
+
+##Subnet?
+sub networking => part of bigger network 
+advantage => security , privacy and isolation 
+how to create subnets ?
+Private and Public Subnets => private does not have access to internet 
+for public to provide access to internet => attack route cables to particular asubnet in cloud providers 
+Whenever you createa a subnet you will give a CIDR range , it is a way of explaining how many IP address are available in a particular subnet so i can tell ki iss private network par itna IP address de do and all 172.16.3.0/24 for 256 IP ADDRESS (28:15)
+if i need only 2 addresses then 172.16.3.0/31 => 32-31 = so no of IPAddress 2^1 => which is 2 addresses
+172.16.3.0/24 => 32-24 => 2^8 IP address which is 256
+
+Mostly private ipaddress you will see them starting with 192,172,10
+
+##Ports 
+:80 , :443 
+there are taken ports so do not take ports taken by application , to access applicataion from internet deployed on a VM , you need a port
+Port is a unique number for your application, in an instance there can be 100s of application and using ports you can distinguish request has to go on which application
