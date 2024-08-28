@@ -1,13 +1,86 @@
+Linux , virtualization and what is a virtual environment and how to connect to VM
+shell commands and shell scripting 
+version control and git 
+ansible
+CI CD concept
+networking concepts 
+
+
+Containers
+ Kubernetes
+ TerraForm
+ AWS-Azure
+ Resources to learn 
+ Python
+ Detailed Devops Roadmap
+
+
+ Basic of SDLC
+2 Operating system (linux)
+3 Scripting/programming 
+4 git for version control
+5 Networking and security 
+6 Learn any one cloud 
+7infrastructure as code ansible / terraform
+8 Microservices and containerization 
+9Kubernetes 
+10 CICO Pipelines 
+11 Monitoring and Logging 
+12 Getops service Mesh
+13 Service Mesh
+
+
 Networking 
 
+##Basics
+
+#Internet Packets 
+a packet is a small segment of a larger message. Each packet contains both data and information about that data. The information about the packet's contents is known as the "header," and it goes at the front of the packet so that the receiving machine knows what to do with the packet.
+While the long line of bits passed over the wires between the two computers, no third computer could use those same wires to send information — it would have to wait its turn.
+
+In contrast to this approach, the Internet is a "packet switching" network. Packet switching refers to the ability of networking equipment to process packets independently from each other. It also means that packets can take different network paths to the same destination, so long as they all arrive at the destination.
+
+# Protocols
+ a protocol is a standardized way of doing certain actions and formatting data so that two or more devices are able to communicate with and understand each other.
+
+# DNS
+The Domain Name System (DNS) is the phonebook of the Internet. Humans access information online through domain names, like nytimes.com or espn.com. Web browsers interact through Internet Protocol (IP) addresses. DNS translates domain names to IP addresses so browsers can load Internet resources
+There are 4 dns servers involved in loading a web page
+DNS recursive resolvers
+Root nameserver 
+TLD nameserver 
+Authoritative nameserver
+(SEE DOCS FOR MORE INFO)
+
+DNS LOOKUP
+
+IP vs TCP => ip is a protocol that says packets mein kya hoga like headers and other info  and kaise travel karega and tcp maintains a connection between the client from the first packet to the last packet
+IP: The Internet Protocol (IP) specifies the origin and destination for each data packet. Routers inspect each packet's IP header to identify where to send them. 
+
+Switch => 
+A network switch connects devices within a network (often a local area network, or LAN*) and forwards data packets to and from those devices. Unlike a router, a switch only sends data to the single device it is intended for (which may be another switch, a router, or a user's computer), not to networks of multiple devices.
+
+Routing =>
+ process of selecting a path across one or more networks. Routing selects the paths for Internet Protocol (IP) packets to travel from their origin to their destination.These Internet routing decisions are made by specialized pieces of network hardware called routers.
+
+Routers => 
+A router is a piece of network hardware responsible for forwarding packets to their destinations. Routers connect to two or more IP networks or subnetworks and pass data packets between them as needed. Routers are used in homes and offices for setting up local network connections. More powerful routers operate all over the Internet, helping data packets reach their destinations.
+and they do another work which is allowing multiple devices to use the same Internet connection.
+
+A network switch forwards data packets between groups of devices in the same network, whereas a router forwards data between different networks. Routers are necessary for an Internet connection, while switches are only used for interconnecting devices. 
+
 ##IP Address
-used to generate/provide unique address to a device which is connected to the network
+used to generate/provide unique address to a device which is connected to the network, An IP address is a unique identifier assigned to a device or domain that connects to the Internet.Each IP packet will contain both the IP address of the device or domain sending the packet and the IP address of the intended recipient
+
 track / monitor activities , block activities
 how does it look like => representation done through IPV4 and generated through IPV4
 Why IPV4 ?? = to maintain a proper standard in a particular format 
 Command => irconfig/ipconfig
 172.16.3.4 => each number can vary from 0 to 255 , so unique ip address 255^4
 why 255 only ? => each of the number is a byte (8 bites) , so ip address is 4 bytes or 32 bits separated by (.)  
+
+Dynamic and static ips
+ when a home user connects to the Internet on their laptop, that user’s ISP assigns them a temporary IP address from a pool of shared IP addresses. This is known as a dynamic IP address. This is more cost-effective for the ISP than assigning each user a permanent, or static, IP address.
 
 ##Subnet?
 sub networking => part of bigger network 
@@ -16,7 +89,7 @@ how to create subnets ?
 Private and Public Subnets => private does not have access to internet 
 for public to provide access to internet => attack route cables to particular asubnet in cloud providers 
 Whenever you createa a subnet you will give a CIDR range , it is a way of explaining how many IP address are available in a particular subnet so i can tell ki iss private network par itna IP address de do and all 172.16.3.0/24 for 256 IP ADDRESS (28:15)
-if i need only 2 addresses then 172.16.3.0/31 => 32-31 = so no of IPAddress 2^1 => which is 2 addresses
+if i need only 2 addresses then 172.16.3.0/31 => 32-31 = so no of IPAddress 2^1 => which is 2 addresses 
 172.16.3.0/24 => 32-24 => 2^8 IP address which is 256
 
 Mostly private ipaddress you will see them starting with 192,172,10
@@ -25,3 +98,26 @@ Mostly private ipaddress you will see them starting with 192,172,10
 :80 , :443 
 there are taken ports so do not take ports taken by application , to access applicataion from internet deployed on a VM , you need a port
 Port is a unique number for your application, in an instance there can be 100s of application and using ports you can distinguish request has to go on which application
+
+
+
+## Virtual Private Cloud (VPC IN AWS)
+
+Vpc banay and then subnets banayega usmein and then gateway banayega to , gateway is to enter the vpc and then after crossing the gateway public subnet , it is something that a user first access inside the vpc , then for eg there is LB , so route table defines how should request go to the application (ec2 in a subnet), it tell the lb how to go , and there can be a security group , it will check only if you are from this ip address then only you can access this application
+LB has access to the pvt subnet and user has access to the LB, and within the LB also you can add security
+in general a person will use a LB address to reach and not a pvt ip address
+
+public subnet => is the one that can be access by the public outside the vpc but will have to pass through the internet gateway 
+when a server in a subnet , tries to access something from the internet it should not be able to know the IP address of the server 
+
+## Security Groups and NACL
+you can add security to subnet level (NAACL) and also at EC2 instance level (Security Groups)
+
+In AWS => security is a shared responsibility
+SGs vs NACLs 
+IN SGs => there is inbound traffic and outbound traffic (traffic coming inside your ec2 and outside your ec2 instance) , so as a part of SG you can manage both of them
+by default sg in aws => all outbound traffic allowed except port 25(it is a mailing service) and block all inbound traffic 
+
+NACL Network access control list => nacl is applied at the subnet level, so i something is applied to the subnet level then it is by default applied to all the ec2 instances inside it 
+SG => you can only oncifgure rules for allowing
+NACL => deny and allow
