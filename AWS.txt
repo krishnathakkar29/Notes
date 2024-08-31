@@ -1,0 +1,2 @@
+#1 => Traditional Vs Cloud Computing 
+Traditional Problem => Scalability expensive and timetaking and wastage of infrastructure
