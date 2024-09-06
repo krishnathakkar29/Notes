@@ -1,33 +1,3 @@
-Linux , virtualization and what is a virtual environment and how to connect to VM
-shell commands and shell scripting 
-version control and git 
-ansible
-CI CD concept
-networking concepts 
-
-
-Containers
- Kubernetes
- TerraForm
- AWS-Azure
- Resources to learn 
- Python
- Detailed Devops Roadmap
-
-
- Basic of SDLC
-2 Operating system (linux)
-3 Scripting/programming 
-4 git for version control
-5 Networking and security 
-6 Learn any one cloud 
-7infrastructure as code ansible / terraform
-8 Microservices and containerization 
-9Kubernetes 
-10 CICO Pipelines 
-11 Monitoring and Logging 
-12 Getops service Mesh
-13 Service Mesh
 
 
 Networking 
@@ -56,6 +26,7 @@ DNS LOOKUP
 
 IP vs TCP => ip is a protocol that says packets mein kya hoga like headers and other info  and kaise travel karega and tcp maintains a connection between the client from the first packet to the last packet
 IP: The Internet Protocol (IP) specifies the origin and destination for each data packet. Routers inspect each packet's IP header to identify where to send them. 
+TCP => sending and everything and IP is for routing
 
 Switch => 
 A network switch connects devices within a network (often a local area network, or LAN*) and forwards data packets to and from those devices. Unlike a router, a switch only sends data to the single device it is intended for (which may be another switch, a router, or a user's computer), not to networks of multiple devices.

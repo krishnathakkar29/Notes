@@ -1,2 +1,34 @@
 #1 => Traditional Vs Cloud Computing 
 Traditional Problem => Scalability expensive and timetaking and wastage of infrastructure
+
+cloud computing services 
+infra => aas , paas , saas => hardware and os EC2
+paas => application and data manage karta hai AWS RDS
+saas => kuch manage mat karo , khaali use karo service , gmail lekin apna data kahi aur rakha jayega 
+
+
+types of cloud  => public pvt and hybrid 
+public => you can access it over the internet , available for the world AWS , AZURE
+(openstack) ?? open source cloud computing solution  , highly customizable 
+PVT: A private cloud is a cloud environment that is exclusively used by a single organization
+hybrid : combination of both 
+So i am making a VPC in AWS right => first i am accessing it then i am making it isliye
+
+#Create first EC2 instance
+Bootstap script?
+now AZ A for user1 and AZ A for user2 may be different in real
+
+inbound => we send request to the server and outbound means server to the outside world
+commands => 
+free -m => see ram 
+lscpu => no of cpus
+df -h 
+ip a => pvt ip address 
+
+volume termination on instance deletion 
+launch a bootstrap script => so the shell script always as a root user chalti hai and not ubuntu user
+
+Security groups => you can only write allow ka rule and not deny ka , also yaa toh inbound(incoming) aur ya toh outbound instance par
+you can attach multiple security groups to one instance
+
+
