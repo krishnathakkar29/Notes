@@ -1,0 +1,91 @@
+one CPU one vote 
+not your keys not your crypto => if i do not have one i dont own my crypto wazirx has my crypto
+
+public key se i can track everything the balance the history and everything 
+
+
+wallets are not accounts they are just collection of account address , just like a normal wallet storing multiple cards
+
+private key is nothing but array of 32bytes and possibiites of guessing someone else's pvt key is 255^32
+ascii consists of exclamation as well or something as well , so ascii encoding is used for private key
+hex takes 4 bites together
+
+base64 => takes 6 bites at a time
+base58 => avoid characters which are kinda looking same
+
+wallet store in base64 58 etc
+
+bytes are cool but highly unreadable 
+
+HD Wallets 
+how are they created => mneuomonics => seed => derivation paths => public and pvt keys 
+
+BTP => proposal for improving btc / eth , 
+BIP32 solves the problem to maintain/store multiple pvt/public keys if you have multiple wallets and simplify the recovery process of crypto wallets 
+public and pvt keys in solana 
+EDDSA => 32 byte pvt key and 32 byte public key and then convert it into base58 and then i get the keys 
+
+
+SOLANA => 32 bytes you generate and convert to base58 that is the key
+in ETH =?> generateKeyPair( => public key => keccak-256 algo => 32 byte string => last 20 bytes => convert to hex => 0x(20bytes)
+
+
+JSONRPC => Remote procedure call 
+=> it is a protocol
+=> my inputs over here are in json format hence  it is JSONRPC
+=> i am remotely calling a function , there is a function that exists in a server in somewhere US and i am calling it remotely
+RPC does many things => scales it , does a lot of caching 
+
+
+=> GRPC => Design: gRPC is optimized for low-latency, high-throughput communication, and supports more complex interaction patterns like streaming (client-side, server-side, and bidirectional).
+=> http and grps => grpc uses buffers and http uses json , text etc
+
+
+
+Blockchain and Razorpay => 
+balances are not stored in integers, stored to lowest currency value 
+Rs 100.1 => 10010 paise , rhs mein jaise hai waise it is stored in blockchain
+
+Question how to connect a web based wallea to a dapp adapter , and what are nfts ?
+
+agar meko apna token/coin banana hai where people can buy / sell it , either you make your own blockchain , or easier way is smart contract in ETH and program in SOL (use an existing blockchain)
+You can write smart contracts (Some use cases) like 
+1. Creating tokens
+2. Swapping tokens 
+3. Lending money
+
+Smart contracts === Web2 backends but deployed on blockchain
+
+Accounts on Solana => 
+Accounts are along with storing the SOL , can store some data as well required by programs (smart contracts) store data related to "code" , or programs (special accounts that contain executable code , "store code")
+
+In SOL 
+code gets deployed on a program account , and iska jo data hai  like variable that gets stored into a different account and a normal account coins ke liye , whenever you put data into blockchain uss account mein you need some cryptocurrency lamports as well 
+ 
+instead of having different blockchains for different use cases , use the same blockchain like ETH and write and deploy your code on the blockchain and all users would interact with the code rather than interacting with own blockchain , as eth is secured
+
+Rent on the blockchain (when you make users , tell to pau to create acc to store data )
+
+Solana cli => some of them are rpcs and some locally
+
+mainnet , devnet , testnet => to get balance i send rewuest to the rpc url , on devnet you can air frop solana and of needed to deploy you can deploy on the solana devnet
+smart contract are backends applications deployed on the blockchain
+
+=> in Ethereum to create a token , deploy smart contracts everytime in SOL , use there token program , just create an account on it no need to deploy SC
+
+=> Token - 
+
+ETH -> to create a token USDC , deploy your own contract (ERC 20) , a templatae SC and whoever wants to create a token you can use this template , 
+ETH token program is a program that has a mapping account to a number ki this account has itna ETH etc probably a hash table 
+
+SOL -> USDC is jsut an account derived from the solana account program 
+solana token program , executable => call a function to get a data account, not executable (A MINT ACCOUNT) => and that specific account / user can mint new tokens 
+To see a token (minting account of that token ) => api.mainnet-beta.solana.com , see and owner is the solana program jisse woh bana hai and has flags like mint authority and hint they have the same account
+SO how does MINT function is called ??
+spl-token create-token => RPC  call => revokes a function to the solana blockchain and create a mint account and pay lamports according to the space it takes 
+
+NFT idea something can cannot be further divided on like , decimals 0 , so you cant send 0.1 something waisa
+
+=> So if a person wants to buy/sell some token , you have to create a token account and like for this account for this mint and for this token program , it has itna itna SOL 
+
+=> creating an acount is compulsory even if  you want to hold token 
