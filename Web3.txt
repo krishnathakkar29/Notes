@@ -88,4 +88,22 @@ NFT idea something can cannot be further divided on like , decimals 0 , so you c
 
 => So if a person wants to buy/sell some token , you have to create a token account and like for this account for this mint and for this token program , it has itna itna SOL 
 
+
+
 => creating an acount is compulsory even if  you want to hold token 
+
+Wallet Adapter -> 
+Wallet => anything that stores your pvt key 
+wallet adapter => a wallet adapter lets a dapp connect to a wallet 
+dapp => any website that wants to debit , use this funds of yours 
+
+Dapp => asks wallet for approval of something , and wallet asks user for approval and then user click confirm the wallet using your pvt key will sign a transaction and send it on blockchain 
+On solana it is preferable to use a wallet adapter 
+
+
+SOLANA SPECIFIC => TRANSACTIONS VS INSTRUCTIONS
+transaction is a bunch of instructions that is sent to the solana blockchain
+while creating a token launchpad => we bunch the instructions into a transaction , and then user once only signs them , rather than signing on each time , like crete-token , mint, attach metadata , also better for UI
+
+=>Token program is just like any other program that you deploy it , but system program is the internal program 
+

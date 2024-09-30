@@ -25,10 +25,80 @@ lscpu => no of cpus
 df -h 
 ip a => pvt ip address 
 
+
+
 volume termination on instance deletion 
 launch a bootstrap script => so the shell script always as a root user chalti hai and not ubuntu user
 
-Security groups => you can only write allow ka rule and not deny ka , also yaa toh inbound(incoming) aur ya toh outbound instance par
-you can attach multiple security groups to one instance
+Security groups => you can only write allow ka rule and not deny ka , also yaa toh inbound(incoming) aur ya toh outbound; 
+Instance par you can attach multiple security groups to one instance and vice versa
 
+A good practice to make one single security group for SSH and for application port like 8080 , make another security group
+
+Instance types 
+general purpose => balance between compute memory and network
+compute optimised => high performance web server , game or ML based servers
+memory '' => inmemory database like redis , like if you store data in the main memory or use caching based 
+accelerated => graphics processing , GPU based instances eg , ISRO NASA Air traffic system
+storage => read and write at high speeds, eg data warehousing instances 
+
+MUltiple reserve types 
+reserve instance , spot instance , upgradable or non upgradable , dedicated hosta
+#20 => get the meta data of the instance such as the events , ipaddress
+when you start and stop the instace the ip address gets changed  
+
+### Attach elastic and static IP to EC2
+where this can be used ? => i need some configuration like db mein daalne ke liye and all and if you change something in the instance and refresh it toh ip change 
+
+
+## Elastic Block Storage (EBS)
+-> AZ specific like 1a ke ec mein only 1a ka ebs and not 1b
+=> virtually attached disk (storage) 
+=> some latency in milliseconds
+=> we can assign EBS directly to the instace , but agar instance gaya toh data bhi jayega , know as Instance storage, preferable for speed
+=> if instance is deleted data will be persisted, and you can attach one EBS to multiple EC2 instance based on type of EBS instance
+=> ebs if created in AZ - A then ussi AZ ke andar ke instance ko hi attach ho skta hai woh
+=> whenever you create EBS , uska replica is created in the same AZ
+=> lsblk , list block
+mount and umount commands in Linux 
+=> you cannot decrease the size of the ebs , only increase
+=> t2.micro does not support multi attach EBS 
+
+types of ebs volumes 
+io => better read and write 
+
+### AWS SNAPSHOT
+-> it is on regional level ,toh isse ek vol ko ek AZ se dusre AZ mein leke jaa skte ho
+-> snapshot ek checkpoint jaisa kuch, where i can restore back as well 
+-> snapshot is region specific as it stores data in s3 which is region specific 
+-> incremental backup , 50 ka lega and if 10 hua wapas add then sirf 10 hoga 
+-> you can change the volume through the snapshot
+-> Automate EBS Volume Backup , lifecycle manager
+-> recycle bin for snapshots 
+
+# Encrypt EBS Volume
+-> if you encrypt it toh data bhi encrypted travel hoga
+-> encrypted volume ka snapshot bhi encrypted banta hai
+-> aws almost no latency for data either it is from encrypted or not encrypted
+
+
+
+### AWS AMI => Amazon machine image
+=> you can configure a vm ya os Pehle se , and make multiple instances from that image 
+=> bootstrap script mein it runs jab we make image , toh it takes some time as soon as it gets executed changes can be seen 
+=> can make image from ec2 ya snapshot any which ways :)
+
+
+### AWS ELB => Elastic Load Balancer 
+=> we used to hit the ec2 ip directly , now hit the load balancer and lb will send request to the ec2
+=> application , network (works on transport layer) , gateway , classic 
+=> 
+
+
+
+
+
+lsblk - list block 
+mount /data/xvdf /temp
+unmount 
 

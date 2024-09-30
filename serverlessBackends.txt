@@ -1,0 +1,113 @@
+AWS/GCP/Azure
+problems of renting a machine and deploying your app -> i buy atleast one server , if no one uses i need per request basis (VM ARCHITECTURE)
+-> if there are manyu people i will have to autoscale and start multiple servers 
+-> Taking care of when to scale 
+-> base cost even if no one is visiting your app 
+monitoring and checking if one server is down then the other gets started 
+
+serverless means me as a developer do not woory about the backend still there is server 
+maintained by soimeone else
+
+Problems with serverless backends -> 
+COld start problem -> latentcy when the 1st request comes after a very long time
+Warm pool -> going to be always up 
+More expenisve for scale -> move back to VM architecture
+
+SERVERLESS PROVIDERS
+AWS LAMBDA
+GOOGLE CLUD FUNCTIONS
+CLOUDFARE WORKERS -> DDOS Attack prevention
+
+wrangler is the cli , normally we own the basic http logic to start and listen , 
+here we dont get about app.listen , wrangler brings it locally
+i cant use express as it heavily depends on node , but express is easy for app.get , and routing 
+make code genric , jo same logic hai keep it different see slides bhai , so that you can deploy nodejs apps easily
+
+
+Hono -> some sort of routing engine that routes request to certain places and gives easier way to write code just like express, it is 
+a framework , whereas wrangler is a client , hono is a routing engine
+npx wrangler login , whoami 
+
+
+
+AWS WALA VIDEO
+People would buy and rent the machine but cliud was not a thing 
+
+Ec2 - compute offer , ec2 is a server , it is a machine in a datacenter of aws that i can get access to and host my code 
+backend wala 
+key pair login - to deploy your code on machine you need access , like password
+
+WHY CLOUD PROVIDERS LIKE AWS?
+google .com points to some ip and these public ips are limited in the world ont everyone has a public ip , so we rent an aws server 
+and it has a public IP
+IP -> how i uniquely identify my server 
+
+
+when i am deploying , i need to tell which ports should be open to the world
+SSH -> SEcure Shell a protocol which i will run on my terminal which will help me connect my machine waha par,securely connecting to 
+the shell on the machine
+mera machine is in Mumbai datacenter and i am fron usa , so i want to connect to the server i want to connect to the terminal of 
+that server in my machine so that i can run commands like git clone , node index.js
+so i SSH in the machine , securely access the sheel in the aws servre 
+and certificate file has access to the server 
+
+
+on my server all the ports are closed and only 443 https port is open 
+http - 80 port 
+https - 443 , if i dont put :80 , it is assumed to be 80 , only 443 is open
+so if i 10x.com:80 is same as 10x.com
+http uses a tcp 
+
+
+What did i do 
+rent a machie , ssh into the machine , cloned in the repo , install node js you csn use nvm
+
+ideally you can use docker , and docker has it kind off
+
+
+
+
+NGINX
+reverse proxy 
+the machine (instance ) where my code is running , so on port 80 something different is running not a js or java process 
+it is doing opposite of proxy 
+proxy -> people add a proxy url on chrome , like my request is not going to the website from my machine , instead it is proxied 
+by some other server to the website 
+proxy -> before i hit the final service , i go through aproxy 
+reverse proxy -> the thing that is listening to the service(machine :80) and routing my request is a reverse proxy
+it will route the request to one of many backends running here 
+13200 -> why to use reverse proxies
+
+if i have 10 backends on a single EC2 instance , so whenever someone goes to the default port (:80) , there is a reverse proxy , 
+a process whose job is ki yeh client hai toh yeh port par ja and so on , it can proxy requests to a specific node js process 
+based on from where it is coming from  
+
+CRUX -> the goal is if i have a single EC2 server to deploy multiple node js processes and want the port 80 to run a single process that 
+routes the request based on what domain name is present you use a reverse proxy 
+
+
+DEPLOYING FRONTENDS ON AWS
+
+Distribution(CDNS -> Content Delivery Networks) vs storage(OBject Stores)
+whenever you have a website that distributes content  
+youtu-> distribute mp4 video files
+pinterest -> distribute photo 
+in google also some html css js comes 
+so any website you go needs to send back something whether it be html css js ,image , video 
+all these things 
+ which are not data from the db, are content , things that are not simple text that is stored in the db actuall files we can call them 
+objects , what are standard practices to store and get thses object on the internet 
+
+Any data you need to search -> should bestored in db
+mp4 , images , jpeg , svg not store in db , store it in object stores -> AWS - S3 Simple Storage Version 3 
+
+So it gives back you a URL which you can use to access that OBJECT , but not everyone has access to it , HERE COMES CDNs
+
+CDNs -> there rare many object stores in the world like S3 let that be the source of truth , as people ask for it dont distribute it directly using the S3 url , use my CDN url and tell me what the source is ..... whenever you create a cdn you tell it the source 
+USE ? 
+the storage is one in the world , but cloudfront the CDN has multiple servers along the world , and whenever i go to the cdn for file it  goes to the nearest server (pops point of presence) and gets back and caches it and gives 
+
+So you have object stores along with CDN , there is one store and multiple pops for cdn , if pops have it cached they give it else they ask the source of truth for the same
+
+So why cant i use cdns for backends servers -> for be data is more specific if i hit /me everyone gets different response , it cannot be cached , for be something called edge networks , you have multiple servers no caching 
+Why cant i have multiple s3 -> data is really expensive bhai , you do not want it replicated for many server , isliye source of truth is one 
