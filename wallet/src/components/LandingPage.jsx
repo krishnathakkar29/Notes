@@ -6,10 +6,6 @@ import { Buffer } from "buffer";
 function LandingPage() {
   const [isGenerated, setIsGenerated] = useState(false);
 
-  useEffect(() => {
-    window.Buffer = Buffer;
-  }, []);
-
   return (
     <>
       <h1 className="text-2xl font-bold mb-4">Wallet</h1>

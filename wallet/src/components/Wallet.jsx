@@ -1,18 +1,20 @@
 import { generateMnemonic, mnemonicToSeedSync } from "bip39";
+import bs58 from "bs58";
+import { derivePath } from "ed25519-hd-key";
+import { Trash } from "lucide-react";
 import { useEffect, useState } from "react";
-import { hmac } from "@noble/hashes/hmac";
-import { sha512 } from "@noble/hashes/sha512";
-import { getPublicKey, sign } from "@noble/ed25519"; // Import the specific functions
+import nacl from "tweetnacl";
 import { Button } from "./ui/button";
-import { Keypair } from "@solana/web3.js";
-
 function Wallet({ isGenerated, setIsGenerated }) {
   const [output, setOutput] = useState([]);
   const [walletsList, setWalletsList] = useState([]);
   const [seed, setSeed] = useState("");
-
+  const [currentIndex, setCurrentIndex] = useState(0);
+  console.log(walletsList);
   const generateWords = () => {
     const words = generateMnemonic(128);
+    console.log("words", words);
+
     setOutput(words.split(" "));
 
     setSeed(mnemonicToSeedSync(words));
@@ -24,38 +26,35 @@ function Wallet({ isGenerated, setIsGenerated }) {
     }
   }, [isGenerated]);
 
-  const derivePath = (path, seed) => {
-    const segments = path
-      .split("/")
-      .slice(1)
-      .map((v) => parseInt(v.replace("'", ""), 10));
-    let derivedSeed = seed;
-    for (const segment of segments) {
-      const index = Buffer.alloc(4);
-      index.writeUInt32BE(segment + 0x80000000, 0);
-      derivedSeed = hmac(
-        sha512,
-        derivedSeed
-      )(Buffer.concat([Buffer.from([0]), derivedSeed, index]));
-    }
-    return derivedSeed;
-  };
   const addWallet = async () => {
-    const id = walletsList.length + 1;
-    const path = `m/44'/501'/${id}'/0'`;
-    const derivedSeed = derivePath(path, seed);
-    const privateKey = derivedSeed.slice(0, 32);
+    const path = `m/44'/501'/${currentIndex}'/0'`;
+    const derivedSeed = derivePath(path, seed.toString("hex")).key;
+    const secret = nacl.sign.keyPair.fromSeed(derivedSeed);
 
-    // Use the getPublicKey function from @noble/ed25519
-    const publicKey = await getPublicKey(privateKey);
+    const publicKey = bs58.encode(secret.publicKey);
 
-    // Combine the private key and public key to create the Keypair
-    const secret = new Uint8Array([...privateKey, ...publicKey]);
-    const pair = Keypair.fromSecretKey(secret).publicKey.toBase58();
+    // const publicKey2 = Keypair.fromSecretKey(
+    //   secret.secretKey
+    // ).publicKey.toBase58();
+    const privateKey = bs58.encode(secret.secretKey.slice(0, 32));
 
-    console.log(pair);
+    setWalletsList((prev) => [
+      ...prev,
+      {
+        id: currentIndex,
+        privateKey,
+        publicKey,
+      },
+    ]);
+
+    setCurrentIndex((prev) => prev + 1);
   };
 
+  const deleteAccount = (index) => {
+    console.log(index);
+
+    setWalletsList((prev) => prev.filter((item) => item.id != index));
+  };
   return (
     <>
       <div className="px-8 mt-4 border-2 border-slate-400 rounded-lg py-4 shadow-sm shadow-white">
@@ -74,16 +73,34 @@ function Wallet({ isGenerated, setIsGenerated }) {
         <h1 className="text-xl font-semibold">Eth Wallet</h1>
         <div>
           <Button variant="secondary" onClick={addWallet}>
-            Add Wallet
+            Add Account
           </Button>
           <Button
-            variant="destructive ml-4"
+            variant="destructive"
+            className="ml-4"
             onClick={() => setIsGenerated(false)}
           >
-            Clear Wallet
+            Delete Wallet
           </Button>
         </div>
       </div>
+      {walletsList.length != 0 &&
+        walletsList.map((item, index) => (
+          <div
+            className=" p-4 my-4 border-2 border-slate-500 rounded-xl"
+            key={index}
+          >
+            <div className="flex justify-between items-center">
+              <p className="border-b border-slate-500">Wallet {item.id + 1}</p>
+              <Trash
+                className="hover:bg-slate-200 hover:cursor-pointer p-2 rounded-sm hover:text-black h-10 w-10 transition-all duration-100"
+                onClick={() => deleteAccount(item.id)}
+              />
+            </div>
+            <p>Private key : {item.privateKey}</p>
+            <p>Private key : {item.publicKey}</p>
+          </div>
+        ))}
     </>
   );
 }
