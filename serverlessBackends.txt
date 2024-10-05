@@ -111,3 +111,43 @@ So you have object stores along with CDN , there is one store and multiple pops 
 
 So why cant i use cdns for backends servers -> for be data is more specific if i hit /me everyone gets different response , it cannot be cached , for be something called edge networks , you have multiple servers no caching 
 Why cant i have multiple s3 -> data is really expensive bhai , you do not want it replicated for many server , isliye source of truth is one 
+
+
+Docker 
+Layers => layers are cached and reusable and are immutable 
+=> if layer 3 is cached then uske pehle ke layers are also cached
+
+VOlumes => if a container wants to store data (persistent) across restarts, it needs to have a volume attached to it 
+Networks => if i need containers to talk to each other they need to be part of the same network
+
+name of the network which is connected to the mongo container , will now be part of the url to connect the mongodb in the backend container mongodb connection string , as it is a DNS similar at localhost , as localhost also points (resolves) to the machine's IP
+
+Why docker used in prod => it is difficult to start a machine , install node and dependencies and clone repo and tsc -b , rather than images can be cached and quickly started
+
+
+## Bind Mounts 
+binds a folder of the machine to the folder in the container , in volumes it was binding from container to a volume 
+
+if you contaierize a nextJS app , so if i make changes in the system next js app folder then it will be reflected in the container ka app folder
+HOT RELOADING => bind mount to make changes in the container when you changet the code locally 
+
+
+## MONOREPOS  => 
+- share code among codebases
+- single repo that holds all frontend , backend , devops
+- when to use simple folders - A codebase which has a Golang service and a JS service , where they do not share anything and services do not depend on each other
+
+
+=> TurboRepo acts more like a build system orchestrator rather than a direct build system itself
+TurboRepo allows to define tasks in monorepo , (schedule and paralize builds)
+- caching builds 
+- dependency management during builds
+- parallelization
+
+=> In packages/ui , in json , generators used to generate components
+- takes care of creating as well as adding into package.json
+
+Volume commands => 
+docker volume ls - show all volumes 
+docker network ls - show all networks 
+docker ls container_id => to see the logs of the particular container if you run it in detatched mode

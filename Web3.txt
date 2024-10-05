@@ -107,3 +107,34 @@ while creating a token launchpad => we bunch the instructions into a transaction
 
 =>Token program is just like any other program that you deploy it , but system program is the internal program 
 
+
+-----------------------------Ownership And Authorities and PDAs--------------------------------------
+#Accounts authorize Owners in Solana
+=> key value store , where each entry is an account , miner stores it , 
+=> uk , there are 3 types of accounts , 1SOL (only sol and no data) , smart-contract , data of the program
+=> every acc on the SOL blockchain , has a program owner
+=> https://solana.com/docs/core/accounts
+=> SOL blockchain is nothing but a bunch of programs like , SystemP TokenP
+=> system program is the owner of the wallet accounts  , and usually system program does not have data , it has lamports(SOL)
+=> Token program used to create a bunch of token mint accounts (they have lamports as wella as data)
+=> BPF Loader owns System , Token program, web of program acccounts which might be the owner of data accounts
+
+System program 
+=> it is native of the solana blockchain
+=> present in solana runtime itself and not deployed separately , but if you create your own smart contract you have to deploy it , but the token program is somewehere deployed 
+=> wallet is a account on the SOL blockchain , that stores 0 data , has some lamports and has System program as the owner
+
+BPF Loader Program
+=> The BPF Loader is the program designated as the "owner" of all other programs on the network
+=> you load bpf program on the SOL blockchain
+=> NOn native programs like , Token prorgram or user deployed program are owned by the bpf loader program
+
+Authority 
+=> authorities are entities or accounts that have the right to perform certain actions or make changes within the program.
+=> Token mint authority - Can mint new tokens , never buy a token , whose mint authority is not null , null means token an be printed by a person and mint more and sell of to degrade the value , it can be set to null
+=> BY Default, programs on SOL are mutable(changeable) by the upgrade-authority , but in ETH smart contracts are immutable
+
+Owners vs Authorities 
+=> each account has an program owner , and only that program (owner) can change data or decrease the lamports however anyone can increase it , 
+=> authority is the few field stored in the data , 
+=> if you want to mint more , it goes throught the program and it checks whether the public key is equal to  the authority stored 
