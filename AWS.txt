@@ -97,7 +97,7 @@ io => better read and write
 
 
 
-
+Linux Commands 
 lsblk - list block 
 mount /data/xvdf /temp
 unmount 
